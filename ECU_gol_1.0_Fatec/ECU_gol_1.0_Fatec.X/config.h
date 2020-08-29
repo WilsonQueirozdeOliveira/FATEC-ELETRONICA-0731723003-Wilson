@@ -24,7 +24,6 @@
 #include <xc.h>
 
 #include <stdlib.h>
-#include "lcd_16x2.h"
 
 #include "displayLCD.h"
 
@@ -33,9 +32,9 @@
 //Define I/Os 
 
 #define Saida_Bico   PORTBbits.RB3    //Liga/desliga BicoInjetor
-#define Ocilador    PORTBbits.RB2    //Sinal da Interrupção de tempo
-#define Ent_MAP PORTBbits.RB1    //Interrupção do sinal do MAP
-#define Ent_PIP  PORTBbits.RB0    //Interrupção do sinal PIP
+#define Ocilador    PORTBbits.RB2    //Sinal da Interrupcao de tempo
+#define Ent_MAP PORTBbits.RB1    //Interrupcao do sinal do MAP
+#define Ent_PIP  PORTBbits.RB0    //Interrupcao do sinal PIP
 
 #define Botao_B1   PORTEbits.RE0
 #define Botao_B2   PORTEbits.RE1

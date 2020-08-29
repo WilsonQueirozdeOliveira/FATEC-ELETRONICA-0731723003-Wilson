@@ -22,13 +22,13 @@
 
 //Define algumas variaveis globais
 
-unsigned long int   tick_time=0;     //Gera contador de tempo
-unsigned long int   t_RPM = 0;      //Contador de intervalo de tempo da RPM
-unsigned long int   t_MAP = 0;      //Contador de intervalo da freq. do MAP
-unsigned long int   f_RPM = 0;      //Valor calculado da freq. de RPM
-long int                  f_MAP = 0;      //Valor calculado da freq. de MAP
-unsigned long int   rotacao = 0;      //Rotacao do motor
-unsigned long int   t100_ms = 0;    //Contador de tempo de 100ms.
+unsigned long int    tick_time=0;     //Gera contador de tempo
+unsigned long int    t_RPM = 0;      //Contador de intervalo de tempo da RPM
+unsigned long int    t_MAP = 0;      //Contador de intervalo da freq. do MAP
+unsigned long int    f_RPM = 0;      //Valor calculado da freq. de RPM
+long int                   f_MAP = 0;      //Valor calculado da freq. de MAP
+unsigned long int    rotacao = 0;      //Rotacao do motor
+unsigned long int    t100_ms = 0;    //Contador de tempo de 100ms.
 
 unsigned long int    TPS_atual = 0;           //Media dos valores atuais do TPS
 unsigned int            TPS_ant = 0;              //Valor anterior do TPS
@@ -111,13 +111,13 @@ void interrupt high_priority interupcoes(void)
             loop_AN1++;
             somatorio_AN1 = somatorio_AN1 + entrada_AN1;
 
-        if (loop_AN1 > 7)          //Acumula 10 medidas
-        {
-            ACT = somatorio_AN1 >> 3;       //Media das 8 medidas
-            loop_AN1 = 0;
-            somatorio_AN1 = 0;
+            if (loop_AN1 > 7)          //Acumula 10 medidas
+            {
+                ACT = somatorio_AN1 >> 3;       //Media das 8 medidas
+                loop_AN1 = 0;
+                somatorio_AN1 = 0;
+            }
         }
-    }
 
     // ----------------------------------------------------------------------------
     //As linhas abaixo serao executadas a cada 100ms
@@ -129,6 +129,7 @@ void interrupt high_priority interupcoes(void)
         {
             ACC = TPS_atual - TPS_ant;
         }
+        
         TPS_ant = TPS_atual;
         t100_ms = 1000;                 //Recarrega o temporizador
     }
@@ -171,8 +172,8 @@ void interrupt high_priority interupcoes(void)
             if ((rotacao>450)&&(FF_Borda==1)&&(Conta_PIP>2))        
             {
                 Saida_Bico = 1;     //Liga o bico injetor
-                T_inj      = 26;        //carrega o tempo de inje�ao
-                tinj       = T_inj;     //coloca no buffer do display
+                T_inj = 26;             //carrega o tempo de inje�ao
+                tinj = T_inj;           //coloca no buffer do display
                 Conta_PIP  = 0;
             }
             else
@@ -182,7 +183,7 @@ void interrupt high_priority interupcoes(void)
         }
         if (FF_Borda == 1)
         {
-            f_RPM=t_RPM;            //Atualiza rotação no display
+            f_RPM=t_RPM;            //Atualiza rotacao no display
             t_RPM = 0;                    //Zera contador de tempo da rotacao
         }
         if (FF_Borda == 0)
@@ -202,7 +203,7 @@ void interrupt high_priority interupcoes(void)
 
     if ((INT1IE && INT1IF))
     {
-        INT1IF=0;               //Libera interrupcao
+        INT1IF= 0;               //Libera interrupcao
 
         f_MAP = t_MAP;                //Carrega a contagem de pulso entra bordas
         t_MAP = 0;                          //Zera contador
@@ -211,16 +212,20 @@ void interrupt high_priority interupcoes(void)
 }
 
 // tabela a ser interpolada do sensor ACT
-typedef struct { signed long x; signed long y; } coord_t; // map act
+typedef struct 
+{ 
+    signed long x; 
+    signed long y; 
+} coord_t; // map act
 
 coord_t c[6] = 
 {
-    {102.4,100.0},  //102   100
-    {122.88,90.0},  //     90
-    {163.84,80.0},  //    80
-    {266.24,60.0},  //     60
-    {430.08,40.0},  //     40
-    {634.88,20.0}   //634 20
+    {102.4,100.0},  //  102   100
+    {122.88,90.0},  //  122   90
+    {163.84,80.0},  //  163   80
+    {266.24,60.0},  //  266   60
+    {430.08,40.0},  //  430   40
+    {634.88,20.0}   //  634   20
 };    
 
 
@@ -274,7 +279,7 @@ LATD = 0X00;
 LATE = 0X00;
 
 TRISB = 0X03;           // Define PORTB como saidas e entradas de interrupcao
-TRISE = 0XFF;           // Define como entradas (Botões)
+TRISE = 0XFF;           // Define como entradas (Botoes)
 TRISC = 0X00;           // Define como saídas
 //TRISD = 0X00;
 TRISAbits.TRISA0 = 1;   // Entrada para AN0
