@@ -10,8 +10,8 @@
  * Vesao/Data               : 1.0V  29/08/2020
  */
 
-#ifndef __MCC_H
-#define __MCC_H
+#ifndef __CONFIG_H
+#define __CONFIG_H
 
 // PIC18F4550 Configuration Bit Settings
 
