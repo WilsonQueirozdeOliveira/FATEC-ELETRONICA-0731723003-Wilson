@@ -17,8 +17,9 @@ __interrupt (high_priority) void high_ISR(void)
         }
     if ( 1 == UART_TX_Empty())
         {
-            UART_Write_String("wilson\r\n");
-            UART_Write(uart_test_num++);
+            UART_Write(uart_test_char);
+            UART_Write_String("\r\n");
+            UART_Write_String("wilson\r\n"); 
         }
 }
 
